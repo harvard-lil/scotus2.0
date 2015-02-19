@@ -1,7 +1,6 @@
-import os, json, re, csv
+import os, json, re, csv, sys
 from pprint import pprint
 
-import sys;
 reload(sys);
 sys.setdefaultencoding("utf8")
 
@@ -54,7 +53,6 @@ for fn in os.listdir(data_dir):
 
 with open('urls.csv', 'a') as csvfile:
     fieldnames = [u'URL in opinion', u'CL ID', u'Case name', u'CL address', u'Date opinion was filed', u'Opinion download URL', u'Citation count']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
