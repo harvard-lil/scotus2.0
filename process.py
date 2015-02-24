@@ -17,14 +17,15 @@ data_dir = './data/'
 #######
 
 # A forgiving regex for a URL
-url_pattern = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+#url_pattern = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+url_pattern = re.compile('(https?://\S+)')
 
 def find_all_urls(text):
     """return a list of all urls in chunk of text"""
     return re.findall(url_pattern, text)
 
 def format_timetravel_date(date):
-    """timetravel likes deas in yyyymmdd format"""
+    """timetravel likes dates in yyyymmddhhmmss format"""
     date_pieces = date.split('-')
     return "%s%s%s151530" % (date_pieces[0], date_pieces[1], date_pieces[2])
     
@@ -53,16 +54,16 @@ for fn in os.listdir(data_dir):
                 urls += find_all_urls(u_string)
 
         # html key
-        if 'html' in data and data['html']:
-            u_string = data['html'].encode('utf-8').replace('\n', '')
-            if find_all_urls(u_string):
-                urls += find_all_urls(u_string)
+        #if 'html' in data and data['html']:
+        #    u_string = data['html'].encode('utf-8').replace('\n', '')
+        #    if find_all_urls(u_string):
+        #        urls += find_all_urls(u_string)
 
         # html_lawbox
-        if 'html_lawbox' in data and data['html_lawbox']:
-            u_string = data['html_lawbox'].encode('utf-8').replace('\n', '')
-            if find_all_urls(u_string):
-                urls += find_all_urls(u_string)
+        #if 'html_lawbox' in data and data['html_lawbox']:
+        #    u_string = data['html_lawbox'].encode('utf-8').replace('\n', '')
+        #    if find_all_urls(u_string):
+        #        urls += find_all_urls(u_string)
 
         # plain_text key
         if 'plain_text' in data and data['plain_text']:
@@ -70,11 +71,11 @@ for fn in os.listdir(data_dir):
             if find_all_urls(u_string):
                 urls += find_all_urls(u_string)
 
-        if urls:
-            for url in set(urls):
 
-                url = cleanup_encoding(url)                
-                date_filed = cleanup_encoding(data['date_filed'])
+        date_filed = cleanup_encoding(data['date_filed'])
+        if urls and int(format_timetravel_date(date_filed)) > 19950000000000:
+            for url in set(urls):
+                url = cleanup_encoding(url)
                 timetravel_address = "http://timetravel.mementoweb.org/list/%s/%s" % (format_timetravel_date(date_filed), url)
                 cl_id = cleanup_encoding(data['id'])
                 case_name = cleanup_encoding(data['citation']['case_name'])
