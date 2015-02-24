@@ -11,7 +11,7 @@ def clean_urls():
 
     count = 0 
 
-    with open('./results/urls.csv', 'rb') as csvfile:
+    with open('./results/raw-urls.csv', 'rb') as csvfile:
         url_reader = csv.DictReader(csvfile)
         for row in url_reader:
         
@@ -46,7 +46,7 @@ def clean_urls():
     
     # Write our cleaned URLs to a new CSV
     with open('./results/cleaned-urls.csv', 'a') as csvfile:
-        fieldnames = [u'URL in opinion', u'CL ID', u'Case name', u'CL address', u'Date opinion was filed', u'Opinion download URL', u'Citation count']
+        fieldnames = [u'URL in opinion', u'CL address', u'Timetravel URL', u'Case name', u'Date opinion was filed', u'Opinion download URL', u'Citation count', u'CL ID']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -84,7 +84,7 @@ def dedupe_urls():
 
     # Write our cleaned URLs to a new CSV
     with open('./results/deduped-and-cleaned-urls.csv', 'a') as csvfile:
-        fieldnames = [u'URL in opinion', u'CL ID', u'Case name', u'CL address', u'Date opinion was filed', u'Opinion download URL', u'Citation count']
+        fieldnames = [u'URL in opinion', u'CL address', u'Timetravel URL', u'Case name', u'Date opinion was filed', u'Opinion download URL', u'Citation count', u'CL ID']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
