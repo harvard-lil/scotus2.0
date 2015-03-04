@@ -91,6 +91,71 @@ def dedupe_urls():
         for row in deduped_rows:
             writer.writerow(row)
 
+
+def combine_rot_columns():
+    """
+    if link ==1 pr link == s404
+        rot column = 1
+    else
+        rot column = 0
+
+
+    read in results/first-version-urls-with-rot-check-deduped-and-cleaned-urls.csv
+
+    loop through rows, adjust, write back out
+    """
+
+    rot_combined_rows = []
+
+    # Consolidated our two columns of rot into one called Rot
+    with open('results/first-version-urls-with-rot-check-deduped-and-cleaned-urls.csv', 'rU') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+
+            if row['Rot'] == None:
+
+                rotten = 0
+
+                if row['Link rot '] == '1' or row['Ref rot'] == 's404':
+                    rotten = 1
+
+                row['Rot'] = rotten
+
+
+            rot_combined_rows.append(row)
+
+
+    # replace our string values wtih our numerical values
+    for row in rot_combined_rows:
+        archive_values = row['Archive Source']
+        archive_values = archive_values.replace('IA', '1')
+        archive_values = archive_values.replace('NARA', '2')
+        archive_values = archive_values.replace('National Archives and Records Administration', '2')
+        archive_values = archive_values.replace('archive-it', '3')
+        archive_values = archive_values.replace('Archive-It', '3')
+        archive_values = archive_values.replace('archive.today', '4')
+        archive_values = archive_values.replace('Stanford Web Archive', '5')
+        archive_values = archive_values.replace('Stanford Web Archives', '5')
+        archive_values = archive_values.replace('Icelandic Web Archive', '6')
+        archive_values = archive_values.replace('Icelandic Web Archives', '6')
+        archive_values = archive_values.replace('UK Web Archive', '7')
+        archive_values = archive_values.replace('UK Web Archives', '7')
+        archive_values = archive_values.replace('UK National Archives Web Archive', '8')
+        row['Archive Source'] = archive_values
+
+    # Write our cleaned URLs to a new CSV
+    with open('./results/consolidated-rot-vals.csv', 'a') as csvfile:
+        fieldnames = [u'URL in opinion', u'Timetravel URL', u'Rot', u'Archive', u'Archive Source', u'CL address', u'Case name', u'Date opinion was filed', u'Opinion download URL', u'Citation count', u'CL ID', u'Link rot ', u'Ref rot']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+
+        for row in rot_combined_rows:
+            writer.writerow(row)
+
+
+
 if __name__ == "__main__":
     #clean_urls()
-    dedupe_urls()
+    #dedupe_urls()
+    combine_rot_columns()

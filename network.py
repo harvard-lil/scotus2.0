@@ -9,7 +9,9 @@ def get_ip_owner(url):
 
     # Get name from the URL
     name_parts = tldextract.extract(url)
-    name = name_parts.subdomain + '.' + name_parts.domain + '.' + name_parts.suffix
+    #name = name_parts.subdomain + '.' + name_parts.domain + '.' + name_parts.suffix
+
+    name = '.'.join([name_parts.subdomain, name_parts.domain, name_parts.suffix])
 
     print "name from parts %s" % name
 
@@ -89,7 +91,7 @@ if __name__ == "__main__":
     augmented_rows = []
 
     # read CSV
-    with open('partial-checked.csv', 'rU') as f:
+    with open('results/consolidated-rot-vals.csv', 'rU') as f:
         reader = csv.DictReader(f)
         for row in reader:
             url = row['URL in opinion']
@@ -131,7 +133,7 @@ if __name__ == "__main__":
 
 
     # Write our cleaned URLs to a new CSV
-    with open('./results/deduped-and-cleaned-and-network-urls.csv', 'a') as csvfile:
+    with open('./results/consolidated-network.csv', 'a') as csvfile:
         fieldnames = [u'URL in opinion', u'Timetravel URL', u'Rot', u'Archive', u'Archive Source', u'CL address', u'Case name', u'Date opinion was filed', u'Opinion download URL', u'Citation count', u'CL ID', u'Link rot', u'Ref rot', u'IP owner handle', u'IP owner name', u'HTTP status code']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
