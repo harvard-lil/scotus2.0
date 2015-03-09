@@ -111,16 +111,13 @@ def combine_rot_columns():
     with open('results/first-version-urls-with-rot-check-deduped-and-cleaned-urls.csv', 'rU') as f:
         reader = csv.DictReader(f)
         for row in reader:
-
-            if row['Rot'] == None:
-
-                rotten = 0
+            if not row['Rot']:
+                rotten = '0'
 
                 if row['Link rot '] == '1' or row['Ref rot'] == 's404':
-                    rotten = 1
+                    rotten = '1'
 
                 row['Rot'] = rotten
-
 
             rot_combined_rows.append(row)
 

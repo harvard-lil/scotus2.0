@@ -8,12 +8,10 @@ import dns.resolver
 def get_ip_owner(url):
 
     # Get name from the URL
-    name_parts = tldextract.extract(url)
-    #name = name_parts.subdomain + '.' + name_parts.domain + '.' + name_parts.suffix
-
-    name = '.'.join([name_parts.subdomain, name_parts.domain, name_parts.suffix])
-
-    print "name from parts %s" % name
+    ext = tldextract.extract(url)
+    name_parts = [ext.subdomain, ext.domain, ext.suffix]
+    name_parts = filter(None, name_parts)
+    name = '.'.join(name_parts)
 
     try:
         answers = dns.resolver.query(name, 'A')
@@ -141,4 +139,3 @@ if __name__ == "__main__":
 
         for row in augmented_rows:
             writer.writerow(row)
-    
