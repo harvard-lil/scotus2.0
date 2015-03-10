@@ -11,7 +11,7 @@ def get_rot_and_archive_counts():
     total_rotten_with_archive = 0
     percent_rotten_with_archive = 0
 
-    with open('results/final-raw.csv', 'rU') as f:
+    with open('../results/final-raw.csv', 'rU') as f:
         reader = csv.DictReader(f)
         for row in reader:
             total_urls += 1
@@ -54,7 +54,7 @@ def get_rot_per_year():
         year_rot_vals[str(i)] = 0
         year_archive_vals[str(i)] = 0
 
-    with open('results/final-raw.csv', 'rU') as f:
+    with open('../results/final-raw.csv', 'rU') as f:
         reader = csv.DictReader(f)
         for row in reader:
             year = row['Date opinion was filed'].split('/')[2]
@@ -62,28 +62,25 @@ def get_rot_per_year():
             year_totals[year] += 1
 
             if row['Rot'] == '1':
-                year_rot_vals[year] += 1
-
                 if row['Archive'] == '1':
                     year_archive_vals[year] += 1
-
-    print year_totals
-    print year_rot_vals
-    print year_archive_vals
-
+                else:
+                    year_rot_vals[year] += 1
 
     # it's easy to feed d3 a csv file. build it here.
     d3_formatted = []
 
     for i in range(1996, 2015):
         year = str(i)
-        d3_formatted.append([year, str(year_totals[year]), str(year_rot_vals[year]), str(year_archive_vals[year])])
+
+        year_total = year_totals[year] - (year_rot_vals[year] + year_archive_vals[year])
+
+        d3_formatted.append([year, str(year_archive_vals[year]), str(year_rot_vals[year]), str(year_total), ])
     
     with open('year-rot-d3.csv', 'a') as csvfile:
-        fieldnames = [u'Year', u'Total', u'Rotten', u'Available through an archive',]
+        fieldnames = [u'Year', u'Citation is rotten but is available through an archive', u'Citation is rotten and not available through an archive', u'Citation is not rotten',]
         writer = csv.writer(csvfile)
         
-
         writer.writerow(fieldnames)
         for row in d3_formatted:
             writer.writerow(row)
@@ -92,5 +89,5 @@ def get_rot_per_year():
 
 if __name__ == "__main__":
 
-    #get_rot_and_archive_counts()
-    get_rot_per_year()
+    get_rot_and_archive_counts()
+    #get_rot_per_year()

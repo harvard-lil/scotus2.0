@@ -7,29 +7,45 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>LIL Team Section Prototype</title>
+    <title>SCOTUS 2.0</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <style>
 
-        body {
-          font: 10px sans-serif;
+        p {
+          font-size: 16px;
+          color: #555;
+        }
+        .rot-vis-container {
+          font: 11px sans-serif;
+          fill: #555;
         }
 
         .axis path, .axis line {
           fill: none;
-          stroke: #000;
+          stroke: #555;
           shape-rendering: crispEdges;
-        }
-
-        .bar {
-          fill: steelblue;
         }
 
         .x.axis path {
           display: none;
+        }
+
+        .rot-vis-container {
+          margin-top: 40px;
+        }
+
+        .fig-desc {
+          color: #777;
+          font-size: 13px;
+        }
+
+        @media (min-width: 1200px) {
+          .container {
+            width: 970px;
+          }
         }
 
     </style>
@@ -58,51 +74,26 @@
 
 
     <div class="container">
-
-
       <div class="row">
         <div class="col-md-12">
-          <h1>Harvard Library Innovation Lab</h1>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <h1>SCOTUS 2.0</h1>
+          <p class="lead">First pass at aggregation and analysis.</p>
         </div>
       </div>
 
-      <h3>Projects</h3>
       <div class="row projects">
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
+        <div class="col-sm-12">
+          <p>In total we found 677 URLs in the opinons. The first URL appeared in 1996 and the latest appeared on July 3, 2014 (where our dataset ended).</p>
+          <p>Of the 677 URLs we found, 315, or 47% are no longer pointing to the material they cite (link/reference rot)</p>
+          <p>We found that web archivsts have been busy. Of the 677 URLs, 546, or 81% have been archived by a web archiving service</p>
+          <p>Even more important, 230 of our 315 rotten URLs, or 73%, have an archive available on the Web.</p>
         </div>
       </div>
 
-      <h3>Sketches</h3>
-      <div class="row projects">
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="project-container">
-          </div>
-        </div>
-      </div>
-
-      <h3>Sketches</h3>
-      <div class="row">
+        <div class="row">
         <div class="col-xs-12">
           <div class="rot-vis-container"></div>
+          <p class="fig-desc">Citations to Web resources</p>
         </div>
         
       </div>
@@ -110,7 +101,7 @@
     </div> <!-- /container -->
 
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug 
+    <script src="js/ie10-viewport-bug-workaround.js"></script> -->
   </body>
 </html>
