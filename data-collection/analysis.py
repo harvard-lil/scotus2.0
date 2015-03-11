@@ -1,4 +1,5 @@
 import csv
+from collections import OrderedDict
 
 def get_rot_and_archive_counts():
 
@@ -78,7 +79,7 @@ def get_rot_per_year():
         d3_formatted.append([year, str(year_archive_vals[year]), str(year_rot_vals[year]), str(year_total), ])
     
     with open('year-rot-d3.csv', 'a') as csvfile:
-        fieldnames = [u'Year', u'Citation is rotten but is available through an archive', u'Citation is rotten and not available through an archive', u'Citation is not rotten',]
+        fieldnames = [u'Year', u'Rotten. Not available through an archive', u'Rotten. Available through an archive', u'Not rotten',]
         writer = csv.writer(csvfile)
         
         writer.writerow(fieldnames)
@@ -87,7 +88,45 @@ def get_rot_per_year():
 
 
 
+def get_acrhive_dist_per_year():
+
+    year_archive_vals = OrderedDict()
+
+    for i in range(1996, 2015):
+        year_archive_vals[str(i)] = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0}
+
+    with open('../results/final-raw.csv', 'rU') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+
+            year = row['Date opinion was filed'].split('/')[2]
+
+            if not  row['Archive Source'].startswith('***'):
+                archive_sources = row['Archive Source'].split(',')
+
+                for archive_source in archive_sources:
+
+                    if archive_source and archive_source != '0':
+                        archive_source = archive_source.strip()
+                        #print "appending %s to %s" % (archive_source, year)
+                        year_archive_vals[year][archive_source] += 1
+
+
+    print year_archive_vals
+
+    with open('archive-dist-d3.csv', 'a') as csvfile:
+        fieldnames = [u'Year', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', ]
+        writer = csv.writer(csvfile)
+        
+        writer.writerow(fieldnames)
+        for k,v in year_archive_vals.iteritems():
+            writer.writerow([k, v['1'], v['2'], v['3'], v['4'], v['5'], v['6'], v['7'], v['8'], ])
+
+
+
+
 if __name__ == "__main__":
 
-    get_rot_and_archive_counts()
+    #get_rot_and_archive_counts()
     #get_rot_per_year()
+    get_acrhive_dist_per_year()

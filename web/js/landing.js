@@ -104,7 +104,7 @@ var draw_rot_vis = function() {
 
 var draw_rot_100_vis = function() {
 
-    var margin = {top: 20, right: 100, bottom: 30, left: 40},
+    var margin = {top: 20, right: 185, bottom: 30, left: 40},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -188,6 +188,79 @@ var draw_rot_100_vis = function() {
 
 
 
+var draw_archive_dist_per_year = function() {
+
+var radius = 84,
+    padding = 10;
+
+var color = d3.scale.ordinal()
+    .range(["#0074D9", "#3D9970", "#2ECC40", "#FFDC00", "#FF851B", "#B10DC9", "#F012BE", "#FF4136"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius)
+    .innerRadius(radius - 30);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.population; });
+
+d3.csv("d3-data/archive-dist-d3.csv", function(error, data) {
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Year"; }));
+
+    data.forEach(function(d) {
+      d.ages = color.domain().map(function(name) {
+        return {name: name, population: +d[name]};
+      });
+    });
+
+    
+
+    var svg = d3.select(".archive-dist-container").selectAll(".pie")
+        .data(data)
+      .enter().append("svg")
+        .attr("class", "pie")
+        .attr("width", radius * 2)
+        .attr("height", radius * 2)
+      .append("g")
+        .attr("transform", "translate(" + radius + "," + radius + ")");
+
+    svg.selectAll(".arc")
+        .data(function(d) { return pie(d.ages); })
+      .enter().append("path")
+        .attr("class", "arc")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.name); });
+
+    svg.append("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return d.Year; });
+
+
+    var legend = d3.select(".archive-dist-container").append("svg")
+        .attr("class", "legend")
+        .attr("width", radius * 2)
+        .attr("height", radius * 2)
+      .selectAll("g")
+        .data(color.domain().slice().reverse())
+      .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(20," + i * 12 + ")"; });
+
+    legend.append("rect")
+        .attr("width", 20)
+        .attr("height", 10)
+        .style("fill", color);
+
+    legend.append("text")
+        .attr("x", 24)
+        .attr("y", 5)
+        .attr("dy", ".35em")
+        .text(function(d) { return d; });
+
+});
+
+}
+
 
 
 
@@ -231,7 +304,7 @@ draw_rot_vis();
 draw_rot_100_vis();
 
 
-
+draw_archive_dist_per_year();
 
 });
 
