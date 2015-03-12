@@ -236,6 +236,9 @@ d3.csv("d3-data/archive-dist-d3.csv", function(error, data) {
         .style("text-anchor", "middle")
         .text(function(d) { return d.Year; });
 
+    var legend_names = {'1': 'Internet Archive', '2': 'National Archives & Recs Admin', '3': 'Archive-It', '4': 'archive.today', 
+        '5': 'Stanford Web Archive', '6': 'Icelandic Web Archive', '7': 'UK Web Archive', '8': 'UK National Archives'}
+
 
     var legend = d3.select(".archive-dist-container").append("svg")
         .attr("class", "legend")
@@ -255,7 +258,7 @@ d3.csv("d3-data/archive-dist-d3.csv", function(error, data) {
         .attr("x", 24)
         .attr("y", 5)
         .attr("dy", ".35em")
-        .text(function(d) { return d; });
+        .text(function(d) { return legend_names[d]; });
 
 });
 
@@ -263,49 +266,10 @@ d3.csv("d3-data/archive-dist-d3.csv", function(error, data) {
 
 
 
-
-
-
-
-
-
 $( document ).ready(function() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-draw_rot_vis();
-
-draw_rot_100_vis();
-
-
-draw_archive_dist_per_year();
-
+    draw_rot_vis();
+    draw_rot_100_vis();
+    draw_archive_dist_per_year();
 });
 
 
