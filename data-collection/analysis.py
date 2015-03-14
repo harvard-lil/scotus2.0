@@ -15,6 +15,10 @@ def get_rot_and_archive_counts():
     with open('../results/final-raw.csv', 'rU') as f:
         reader = csv.DictReader(f)
         for row in reader:
+
+            if total_urls >= 555:
+                break
+
             total_urls += 1
 
             if row['Rot'] == '1':
@@ -124,9 +128,69 @@ def get_acrhive_dist_per_year():
 
 
 
+def get_top_n_web_hosts():
 
+    ip_owners = {'akamai': 0, 'amazon': 0, 'softlayer': 0, 'fastly': 0, 'rackspace': 0, 
+        'google': 0, 'edgecast': 0, 'microsoft': 0, 'qwest': 0, 'cloudflare': 0, 'cdnetworks': 0, 'level3': 0}
+
+    total = 0
+
+    with open('../results/final-raw.csv', 'rU') as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            total += 1
+            ip_owner = row['IP owner name']
+            ip_owner = ip_owner.lower()
+
+            if 'akamai' in ip_owner:
+                ip_owners['akamai'] += 1
+
+            if 'amazon' in ip_owner or 'amzn' in ip_owner:
+                ip_owners['amazon'] += 1
+
+            if 'soft' in ip_owner:
+                ip_owners['softlayer'] += 1
+
+            if 'fastly' in ip_owner:
+                ip_owners['fastly'] += 1
+
+            if 'rackspace' in ip_owner:
+                ip_owners['rackspace'] += 1
+
+            if 'goog' in ip_owner:
+                ip_owners['google'] += 1
+
+            if 'edgecast' in ip_owner:
+                ip_owners['edgecast'] += 1
+
+            if 'microsoft' in ip_owner:
+                ip_owners['microsoft'] += 1
+
+            if 'qwest' in ip_owner:
+                ip_owners['qwest'] += 1
+
+            if 'cloudflare' in ip_owner:
+                ip_owners['cloudflare'] += 1
+
+            if 'cdnetworks' in ip_owner:
+                ip_owners['cdnetworks'] += 1
+
+            if 'level' in ip_owner:
+                ip_owners['level3'] += 1
+
+
+    for k,v in ip_owners.iteritems():
+        percent_cloud = v / float(total)
+        print '<tr>'
+        print '    <th scope="row">1</th>'
+        print '    <td>%s</td>' % k
+        print '    <td>%i/%0.2f</td>' % (v, percent_cloud)
+        print '</tr>'
+        
 if __name__ == "__main__":
 
     #get_rot_and_archive_counts()
     #get_rot_per_year()
-    get_acrhive_dist_per_year()
+    #get_acrhive_dist_per_year()
+    get_top_n_web_hosts()

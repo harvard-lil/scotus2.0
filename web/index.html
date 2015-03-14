@@ -17,10 +17,17 @@
         p {
           font-size: 16px;
           color: #555;
+          font-weight: 300;
         }
+
+        h2 {
+          margin-top: 40px;
+        }
+
         .vis {
           font: 11px sans-serif;
           fill: #555;
+          margin-top: 90px;
         }
 
         .axis path, .axis line {
@@ -42,10 +49,6 @@
           shape-rendering: crispEdges;
         }
 
-        .vis {
-          margin-top: 40px;
-        }
-
         .fig-desc {
           color: #777;
           font-size: 13px;
@@ -60,6 +63,16 @@
           margin-bottom: 10px;
           margin-left: 5px;
           margin-right: 5px;
+        }
+
+        th, td, th.row{
+          font-size: 14px;
+          font-weight: 300;
+        }
+
+        thead th  {
+          font-size: 15px;
+          font-weight: 400x;
         }
 
 
@@ -84,16 +97,6 @@
   </head>
 
   <body>
-
-    
-
-<script>
-
-
-
-</script>
-
-
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -105,51 +108,139 @@
         <div class="col-sm-12">
           <p>In total we found 677 URLs in the opinons. The first URL appeared in 1996 and the latest appeared on July 3, 2014 (where our dataset ended).</p>
           <p>Of the 677 URLs we found, 315, or 47% are no longer pointing to the material they cite (link/reference rot).</p>
-          <p>We found that web archivsts have been busy. Of the 677 URLs, 546, or 81% have been archived by a web archiving service. 230 of our 315 rotten URLs, or 73%, have an archive available on the Web.</p>
+
         </div>
       </div>
 
         <div class="row">
             <div class="col-xs-12">
               <div class="rot-vis-container vis"></div>
-              <p class="fig-desc">Citations to Web per year</p>
+              <p class="fig-desc">Figure 1, Citations to the Web per year</p>
+                <p>We found that web archivsts have been busy. Of the 677 URLs, 546, or 81% have been archived by a web archiving service. 230 of our 315 rotten URLs, or 73%, have an archive available on the Web.</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
               <div class="rot-vis-100-container vis"></div>
-              <p class="fig-desc">Percentage of Citations to the Web per year</p>
+              <p class="fig-desc">Figure 2, Percentage of Citations to the Web per year</p>
+              <p>It's no suprrise that the older opinions have more rotten web citations.</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
               <div class="archive-dist-container vis"></div>
-              <p class="fig-desc">Distribution of archives per year</p>
+              <p class="fig-desc">Figure 3, Distribution of archives per year</p>
+              <p>For each link we looked for an archive using the <a href="http://timetravel.mementoweb.org">Memento Timetravel service</a>. As expected, the Internet Archive (and its Archive-It service) is deep. <a href="archive.today">archive.today</a> seems to have coverage going a ways back, even though the service hasn't been around all that long. How'd that happen? And the <a href="http://www.archives.gov/">National Archives</a> seem to have some coverage, but not all that much. How do they choose what to archive?</p>
             </div>
         </div>
 
+<div class="row">
+            <div class="col-xs-12">
+              <h2>Two ways to count</h2>
+                <p>The <a  href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0115253">recent Hiberlink study</a> focused on articles instead of links, finding that 70% of the 1.8 million science, tecbnology, and math articles with web links published between 1997 and 2012 suffer from link or reference rot. If use this same zoom level, we find that 61% of opinions suffer from link or refernce rot.</p>
+            </div>
+        </div>
+
+  
 
         <div class="row">
             <div class="col-xs-12">
-              <h2>Comparing SCOTUS 1.0 and SCOTUS 2.0</p>
-                <p>How do we compare our findings to SCOTUS 1.0? Can we do a simple percent rotten comparison?</p>
+              <h2>SCOTUS 1.0 links still decaying</h2>
+                <p>The <a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2329161">original study</a> found that 50% of citations to the Web were no longer available. Using approximately the same 555 links used in the original study, we found that 54% of the citations to the Web are no longer available.</p>
+                <p>Since the original study,</p>
+                <p>14.5% (16) of URLs from decisions issued after 2012 are rotten.</p>
+                <p>81.8% (90) of URLs from decisions issued after 2012 have been archived.</p>
+                <p>62.5% (10) of rotten URLs from decisions issued after 2012 have been archived.</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
-              <h2>A peek into Web Entropy using the SCOTUS 2.0 data</p>
-                <p>Some initial clustering data. Even if it's just the top n hosts (Amazon/Akamai/...) with percentages.</p>
+              <h2>A peek into Web Entropy</p>
+                <p>For each of our 677 URLs we looked up the owner of the IP. We then plucked out some of the more familiar names and summed them.</p>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Service</th>
+                      <th>Number/Percent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>akamai</td>
+                        <td>85/0.13</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>qwest</td>
+                        <td>68/0.10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>amazon</td>
+                        <td>26/0.04</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>rackspace</td>
+                        <td>17/0.03</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>level3</td>
+                        <td>13/0.02</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>fastly</td>
+                        <td>8/0.01</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>cdnetworks</td>
+                        <td>7/0.01</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>cloudflare</td>
+                        <td>7/0.01</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>softlayer</td>
+                        <td>5/0.01</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>google</td>
+                        <td>4/0.01</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>edgecast</td>
+                        <td>3/0.00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>microsoft</td>
+                        <td>1/0.00</td>
+                    </tr>
+                  </tbody>
+                </table>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
               <h2>Resources</p>
-                <p>Links to freshened up GitHub repo with code and writeup of approach.</p>
-                <p>Link to download or view gdoc of results</p>
+                <p>The <a href="https://docs.google.com/spreadsheets/d/1Fxuo15ceBMp0OnNx_NriY4g-m0CpI0lGGQB3KLCatM0/edit?usp=sharing">browsable result set</a>.</p>
+                <p>A <a href="https://drive.google.com/file/d/0BzbtszgF_aGnMDZZQlpnZWhzN1E/view?usp=sharing">writeup</a> of the methods used to collect this data</p>
+                <p>A brief <a href="https://drive.google.com/file/d/0BzbtszgF_aGndjBEUTBSZDBXSUE/view?usp=sharing"review of existing literature</a> on link rot</p>
+                <p>The <a href="http://github.com/harvard-lil/scotus2.0">code and downloadable results</a>.</p>
             </div>
         </div>
 
